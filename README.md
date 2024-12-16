@@ -26,3 +26,17 @@ COMMANDE :
 TABLEAU DE BORD : 
 
 -stockage, liste commande (par heure) , autre données ... 
+
+UserManager :
+- Création d'utilisateur.
+- Connexion utilisateur (login).
+- Récupération par ID/email.
+- Mise à jour des informations.
+ProductManager :
+- Ajout/modification de produits.
+- Gestion des stocks.
+- Récupération des produits disponibles.
+CommandeManager :
+- Création de commandes avec items.
+- Suivi des statuts (préparation, livraison).
+- Détails des commandes.
