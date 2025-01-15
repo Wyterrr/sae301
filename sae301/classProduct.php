@@ -1,5 +1,6 @@
 <?php 
 class Product {
+    //Attribut
     private $id;
     private $name;
     private $description;
@@ -7,6 +8,7 @@ class Product {
     private $stock;
     private $creation;
 
+    //Méthode
     public function setId($id) {
         if (!is_int($id) || $id <= 0) {
             throw new Exception("Invalid ID. Must be a positive integer.");
