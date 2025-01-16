@@ -1,3 +1,13 @@
+A faire : 
+- Rajouter qu'il faut réduire le stock lorsque quelque chose a été pris.
+- Supprimer la commande
+    1 conditions suppr (si elle est toujours en préparation)
+- peut etre reprendre le tableau de bord
+    1 Calendrier pour répertorier les commandes selon les dates
+    2 Gain actuelle total
+    3 Stocks
+
+
 Définir les pages à faire pour l'appli :
 
 - Compte
