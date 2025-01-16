@@ -6,6 +6,7 @@ class CommandeManager {
         $this->db = $db;
     }
 
+
     // Créer une commande
     public function createCommande($commande, $items) {
         $this->db->beginTransaction();
@@ -61,6 +62,14 @@ class CommandeManager {
 
         return ['commande' => $commande, 'items' => $items];
     }
+
+    public function getAllCommandeIds() {
+        $query = $this->db->prepare("SELECT id FROM commande");
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_COLUMN);
+    }
 }
+
+    
 
 ?>
