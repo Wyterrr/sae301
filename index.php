@@ -6,19 +6,19 @@ error_reporting(E_ALL);
 
 require_once 'CommandeManager.php';
 require_once 'classCommande.php';
-require_once 'classCommandeItem.php'; 
+require_once 'classCommandeItem.php';
 
 // BDD
-$dsn = 'mysql:host=localhost;dbname=sae301;charset=utf8'; 
-$username = 'root'; 
-$password = ''; 
+$dsn = 'mysql:host=localhost;dbname=sae301;charset=utf8';
+$username = 'root';
+$password = '';
 
 try {
     $pdo = new PDO($dsn, $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // produits
-    $stmt = $pdo->prepare('SELECT id, name FROM products');
+    $stmt = $pdo->prepare('SELECT id, name, prix FROM products');
     $stmt->execute();
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -77,12 +77,14 @@ try {
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="script.js" defer></script>
     <title>Ajouter une Commande</title>
 </head>
+
 <body>
     <h1>Ajouter une nouvelle commande</h1> <a href="commande.php">commande</a>
     <form method="POST">
@@ -98,18 +100,56 @@ try {
                 <label>Produit :</label>
                 <select name="product_id[]" required>
                     <?php foreach ($products as $product): ?>
-                        <option value="<?php echo htmlspecialchars($product['id']); ?>">
+                        <option value="<?php echo htmlspecialchars($product['id']); ?>" data-price="<?php echo htmlspecialchars($product['prix'] ?? '0'); ?>">
                             <?php echo htmlspecialchars($product['name']); ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
                 <label>Quantité :</label>
                 <input type="number" name="quantity[]" min="1" value="1" required><br><br>
+                <input type="text" name="prix[]" readonly>
             </div>
         </div>
-        <button type="button" onclick="addItem()">Ajouter un item</button><br><br>
+        <button type="button" id="ajout-item">Ajouter un item</button><br><br>
 
         <button type="submit">Ajouter</button>
     </form>
+    <script>
+        //// AJOUTER UN NOUVEL ITEM DANS LA COMMANDE ////
+
+        document.getElementById("ajout-item").addEventListener("click", function() {
+            const itemsDiv = document.getElementById("items");
+            const newItem = document.createElement("div");
+            newItem.classList.add("item");
+            newItem.innerHTML = `
+        <label>Produit :</label>
+        <select name="product_id[]" required>
+                    <?php foreach ($products as $product): ?>
+                        <option value="<?php echo htmlspecialchars($product['id']); ?>" data-price="<?php echo htmlspecialchars($product['prix'] ?? '0'); ?>">
+                            <?php echo htmlspecialchars($product['name']); ?>
+                        </option>
+                    <?php endforeach; ?>
+        </select>
+        <label>Quantité :</label>
+        <input type="number" name="quantity[]" min="1" value="1" required><br><br>
+        <input type="text" name="prix[]" readonly>
+    `;
+            itemsDiv.appendChild(newItem);
+            updatePrice(newItem);
+        });
+
+        function updatePrice(item) {
+            const select = item.querySelector('select[name="product_id[]"]');
+            const priceInput = item.querySelector('input[name="prix[]"]');
+            select.addEventListener('change', function() {
+                const selectedOption = select.options[select.selectedIndex];
+                const price = selectedOption.getAttribute('data-price');
+                priceInput.value = price;
+            });
+        }
+
+        document.querySelectorAll('.item').forEach(updatePrice);
+    </script>
 </body>
+
 </html>
