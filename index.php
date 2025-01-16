@@ -110,26 +110,5 @@ try {
 
         <button type="submit">Ajouter</button>
     </form>
-
-    <script>
-        function addItem() {
-            const itemsDiv = document.getElementById('items');
-            const newItem = document.createElement('div');
-            newItem.classList.add('item');
-            newItem.innerHTML = `
-                <label>Produit :</label>
-                <select name="product_id[]" required>
-                    <?php foreach ($products as $product): ?>
-                        <option value="<?php echo htmlspecialchars($product['id']); ?>">
-                            <?php echo htmlspecialchars($product['name']); ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-                <label>Quantité :</label>
-                <input type="number" name="quantity[]" min="1" value="1" required><br><br>
-            `;
-            itemsDiv.appendChild(newItem);
-        }
-    </script>
 </body>
 </html>
