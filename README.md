@@ -1,3 +1,8 @@
+Groupe :
+INTHAVONG Pierre
+LOTSYNYAK Ivan
+PIRET Iwen
+
 Définir les pages à faire pour l'appli :
 
 - Compte
@@ -7,9 +12,10 @@ SAE DOMINIQUE
 
 
 page : 
-- MAPS/UTILISATEURS
-- COMMANDE 
-- TABLEAU DE BORD
+- MAPS -> PLotLy
+- UTILISATEURS -> Création commande, stockage bdd 
+- COMMANDE ->Page, Connexion bdd comande, affichage, changement de statut
+- TABLEAU DE BORD (bonus)
 
 
 MAPS/UTILISATEURS : 
