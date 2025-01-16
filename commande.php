@@ -19,11 +19,33 @@ try {
     echo 'Erreur de connexion à la base de données : ' . $e->getMessage();
     exit;
 }
+
+// Vérifier si c'est une requête AJAX pour obtenir les détails de la commande
+if (isset($_GET['action']) && $_GET['action'] === 'getDetails' && isset($_GET['id'])) {
+    $commandeId = $_GET['id'];
+    $details = $manager->getCommandeDetails($commandeId);
+
+    $commande = $details['commande'];
+    $items = $details['items'];
+    ?>
+
+    <h3>Détails de la commande #<?php echo htmlspecialchars($commandeId); ?></h3>
+    <p>ID de la commande: <?php echo htmlspecialchars($commande['id']); ?></p>
+    <p>Date de création: <?php echo htmlspecialchars($commande['creation']); ?></p>
+    <h4>Items:</h4>
+    <ul>
+        <?php foreach ($items as $item): ?>
+            <li>Produit: <?php echo htmlspecialchars($item['product_id']); ?>, Quantité: <?php echo htmlspecialchars($item['quantity']); ?></li>
+        <?php endforeach; ?>
+    </ul>
+
+    <?php
+    exit;
+}
 ?>
 
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,16 +66,16 @@ try {
         <div class="view">
             <div class="list">
                 <?php if (empty($commandeIds)): ?>
-                        <div class="list-number">
-                            <h2 style="background-color: white; border-radius: 10px; padding:15px; width:85%; display:flex; justify-content:center; margin:20px;">Aucune commande en préparation</h2>
+                    <div class="list-number">
+                        <h2 style="background-color: white; border-radius: 10px; padding:15px; width:85%; display:flex; justify-content:center; margin:20px;">Aucune commande en préparation</h2>
+                    </div>
+                <?php else: ?>
+                    <?php foreach ($commandeIds as $commandeId): ?>
+                        <div class="list-number" onclick="logCommandeId(<?php echo htmlspecialchars($commandeId); ?>)">
+                            <h2 style="background-color: white; border-radius: 10px; padding:15px; width:85%; display:flex; justify-content:center; margin:20px;">Commande # <?php echo htmlspecialchars($commandeId); ?></h2>
                         </div>
-                    <?php else: ?>
-                        <?php foreach ($commandeIds as $commandeId): ?>
-                            <div class="list-number">
-                                <h2 style="background-color: white; border-radius: 10px; padding:15px; width:85%; display:flex; justify-content:center; margin:20px;">Commande # <?php echo htmlspecialchars($commandeId); ?></h2>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
             <div class="details"></div>
         </div>
@@ -68,13 +90,25 @@ try {
             document.getElementById('current-time').textContent = `${hours}:${minutes}`;
         }
 
+        function logCommandeId(commandeId) {
+            const url = `commande.php?action=getDetails&id=${commandeId}`;
+
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    const detailsDiv = document.querySelector('.details');
+                    detailsDiv.innerHTML = data;
+                })
+                .catch(error => console.error('Erreur:', error));
+        }
+
         function updateTitle() {
             const title = document.title;
             document.getElementById('page-title').textContent = title;
         }
 
-        setInterval(updateTime, 1000); 
-        updateTime(); 
+        setInterval(updateTime, 1000);
+        updateTime();
         updateTitle();
     </script>
 </body>
