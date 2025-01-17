@@ -39,6 +39,12 @@ class CommandeManager {
                 'quantity' => $item->getQuantity(),
                 'price' => $item->getPrice(),
             ]);
+             // Réduire le stock du produit
+             $query = $this->db->prepare("UPDATE products SET stock = stock - :quantity WHERE id = :product_id");
+            $query->execute([
+                'quantity' => $item->getQuantity(),
+                'product_id' => $item->getProductId(),
+            ]);
         }
 
         $this->db->commit();
