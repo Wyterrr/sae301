@@ -1,12 +1,7 @@
-A faire : 
-- Rajouter qu'il faut réduire le stock lorsque quelque chose a été pris.
-- Supprimer la commande
-    1 conditions suppr (si elle est toujours en préparation)
-- peut etre reprendre le tableau de bord
-    1 Calendrier pour répertorier les commandes selon les dates
-    2 Gain actuelle total
-    3 Stocks
-
+Groupe :
+INTHAVONG Pierre
+LOTSYNYAK Ivan
+PIRET Iwen
 
 Définir les pages à faire pour l'appli :
 
@@ -17,9 +12,10 @@ SAE DOMINIQUE
 
 
 page : 
-- MAPS/UTILISATEURS
-- COMMANDE 
-- TABLEAU DE BORD
+- MAPS -> PLotLy
+- UTILISATEURS -> Création commande, stockage bdd 
+- COMMANDE ->Page, Connexion bdd comande, affichage, changement de statut
+- TABLEAU DE BORD (bonus)
 
 
 MAPS/UTILISATEURS : 
