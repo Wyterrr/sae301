@@ -22,9 +22,26 @@ try {
     $stmt->execute();
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+    // commandes en préparation
+    $stmt = $pdo->prepare('SELECT id, user_id, total, creation FROM commande WHERE statut = "preparation"');
+    $stmt->execute();
+    $commandes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
     $manager = new CommandeManager($pdo);
     //formulaire
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_commande_id'])) {
+        $commandeId = (int)$_POST['delete_commande_id'];
+        $manager->deleteCommande($commandeId);
+
+        // Recharger la page après la suppression de la commande
+        echo "<form id='reload-form' method='POST' style='display:none;'>
+                <input type='hidden' name='form_submitted' value='1'>
+              </form>
+              <script>
+                document.getElementById('reload-form').submit();
+              </script>";
+        exit;
+    } elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['form_submitted'])) {
         $userId = (int)$_POST['user_id'];
 
         // si le user existe
@@ -69,6 +86,15 @@ try {
 
         // ajout commande et items
         $manager->createCommande($commande, $items);
+
+        // Recharger la page après l'ajout de la commande
+        echo "<form id='reload-form' method='POST' style='display:none;'>
+                <input type='hidden' name='form_submitted' value='1'>
+              </form>
+              <script>
+                document.getElementById('reload-form').submit();
+              </script>";
+        exit;
     }
 } catch (Exception $e) {
     echo 'Erreur de connexion à la base de données : ' . $e->getMessage();
@@ -88,7 +114,7 @@ try {
 
 <body>
     <h1>Ajouter une nouvelle commande</h1> <a href="commande.php">commande</a>
-    <form method="POST">
+    <form method="POST" id="commande-form">
         <label for="user_id">ID de l'utilisateur :</label>
         <input type="number" id="user_id" name="user_id" required><br><br>
 
@@ -113,8 +139,29 @@ try {
         </div>
         <button type="button" id="ajout-item">Ajouter un item</button><br><br>
 
-        <button type="submit">Ajouter</button>
+        <button type="submit" id="ajouter-commande">Ajouter</button>
     </form>
+
+    <h2>Commandes en préparation</h2>
+    <?php if (empty($commandes)): ?>
+        <p>Il n'y a pas de commandes en préparation.</p>
+    <?php else: ?>
+        <ul>
+            <?php foreach ($commandes as $commande): ?>
+                <li>
+                    Commande ID: <?php echo htmlspecialchars($commande['id']); ?>, 
+                    Utilisateur ID: <?php echo htmlspecialchars($commande['user_id']); ?>, 
+                    Total: <?php echo htmlspecialchars($commande['total']); ?>, 
+                    Création: <?php echo htmlspecialchars($commande['creation']); ?>
+                    <form method="POST" style="display:inline;">
+                        <input type="hidden" name="delete_commande_id" value="<?php echo htmlspecialchars($commande['id']); ?>">
+                        <button type="submit">Supprimer</button>
+                    </form>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
+
     <script>
         //// AJOUTER UN NOUVEL ITEM DANS LA COMMANDE ////
 
