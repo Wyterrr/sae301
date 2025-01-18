@@ -1,5 +1,5 @@
 <?php
-require_once 'CommandeManager.php';
+require_once 'Manager/CommandeManager.php';
 
 // Connexion à la base de données
 $dsn = 'mysql:host=localhost;dbname=sae301;charset=utf8';
@@ -50,7 +50,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'getDetails' && isset($_GET['i
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Suivi des commandes > En cours</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
     <div class="main">

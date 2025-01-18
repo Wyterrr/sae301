@@ -4,9 +4,9 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require_once 'CommandeManager.php';
-require_once 'classCommande.php';
-require_once 'classCommandeItem.php';
+require_once 'Manager/CommandeManager.php';
+require_once 'Class/classCommande.php';
+require_once 'Class/classCommandeItem.php';
 
 // BDD
 $dsn = 'mysql:host=localhost;dbname=sae301;charset=utf8';
@@ -108,7 +108,7 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="script.js" defer></script>
-    <link rel="stylesheet" href="IndexStyle.css">
+    <link rel="stylesheet" href="style/IndexStyle.css">
     <title>Ajouter une Commande</title>
 </head>
 
