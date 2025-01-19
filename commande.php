@@ -29,15 +29,23 @@ if (isset($_GET['action']) && $_GET['action'] === 'getDetails' && isset($_GET['i
     $items = $details['items'];
     ?>
 
-    <h3>Détails de la commande #<?php echo htmlspecialchars($commandeId); ?></h3>
-    <p>ID de la commande: <?php echo htmlspecialchars($commande['id']); ?></p>
-    <p>Date de création: <?php echo htmlspecialchars($commande['creation']); ?></p>
-    <h4>Items:</h4>
-    <ul>
-        <?php foreach ($items as $item): ?>
-            <li>Produit: <?php echo htmlspecialchars($item['product_id']); ?>, Quantité: <?php echo htmlspecialchars($item['quantity']); ?></li>
-        <?php endforeach; ?>
-    </ul>
+    <h3>Commande n°<?php echo htmlspecialchars($commandeId); ?></h3>
+    <div class="info">
+        <p class="name"><?php echo htmlspecialchars($commande['name']); ?></p>
+        <p class="date"><?php echo htmlspecialchars($commande['creation']); ?></p>
+    </div>
+    <div class="contact">
+        <p class="mail"><?php echo htmlspecialchars($commande['email']); ?></p>
+        <p class="telephone"><?php echo htmlspecialchars($commande['telephone']); ?></p>
+    </div>
+    <div class="items">
+        <h4>Items:</h4>
+        <ul>
+            <?php foreach ($items as $item): ?>
+                <li class="product">Produit: <?php echo htmlspecialchars($item['product_name']); ?>, Quantité: <?php echo htmlspecialchars($item['quantity']); ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
 
     <?php
     exit;
@@ -50,7 +58,10 @@ if (isset($_GET['action']) && $_GET['action'] === 'getDetails' && isset($_GET['i
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Suivi des commandes > En cours</title>
-    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="./style/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="main">

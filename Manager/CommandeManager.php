@@ -95,18 +95,29 @@ class CommandeManager
     }
 
     // Récupérer les détails d’une commande
+
     public function getCommandeDetails($commandeId)
-    {
-        $query = $this->db->prepare("SELECT * FROM commande WHERE id = :id");
-        $query->execute(['id' => $commandeId]);
-        $commande = $query->fetch();
+{
+    $query = $this->db->prepare("
+        SELECT c.*, u.name, u.email, u.telephone 
+        FROM commande c 
+        JOIN users u ON c.user_id = u.id 
+        WHERE c.id = :id
+    ");
+    $query->execute(['id' => $commandeId]);
+    $commande = $query->fetch();
 
-        $query = $this->db->prepare("SELECT * FROM commande_item WHERE order_id = :id");
-        $query->execute(['id' => $commandeId]);
-        $items = $query->fetchAll();
+    $query = $this->db->prepare("
+        SELECT ci.*, p.name as product_name 
+        FROM commande_item ci 
+        JOIN products p ON ci.product_id = p.id 
+        WHERE ci.order_id = :id
+    ");
+    $query->execute(['id' => $commandeId]);
+    $items = $query->fetchAll();
 
-        return ['commande' => $commande, 'items' => $items];
-    }
+    return ['commande' => $commande, 'items' => $items];
+}
 
     public function getAllCommandeIds()
     {

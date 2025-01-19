@@ -77,7 +77,40 @@ body {
 .details {
   grid-area: 1 / 2 / 2 / 3;
   background-color: rgb(169, 134, 134, 0.5);
-  margin: 15px;
   box-shadow: rgba(0, 0, 0, 0.15) 3.95px 3.95px 2.6px;
   border-radius: 15px;
+  margin: 0;
+  padding-left: 25px;
+  font-family: "DynaPuff", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+
+h3 {
+  background-color: white;
+  font-size: 2rem;
+  padding: 15px;
+  width: 50%;
+  border-radius: 15px;
+  text-align: center;
+}
+.info, .contact {
+  display: flex;
+  flex-direction: row;
+}
+.name,
+.date,
+.mail, 
+.telephone {
+  background-color: white;
+  border-radius: 10px;
+  padding: 15px;
+  font-size: 1rem;
+  width: fit-content;
+}
+
+.product{
+  padding: 20px;
 }
