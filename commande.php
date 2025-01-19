@@ -76,6 +76,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'confirmDelivery' && isset($_G
     <div class="main">
         <div class="navbar">
             <a href="index.php">Ajout de commande</a>
+            <a href="carte/index.html">Carte</a>
         </div>
         <div class="header">
             <div class="title">

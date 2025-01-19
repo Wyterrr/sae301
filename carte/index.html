@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carte des utilisateurs</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #carte {
+            height: 500px; /* Задаем высоту карты */
+            width: 100%; /* Карта занимает всю ширину */
+            border: 1px solid #ccc; /* Для наглядности */
+        }
+    </style>
+</head>
+<body>
+    <h1>Carte des utilisateurs</h1>
+    <a href="../commande.php">commande</a>
+    <div id="carte"></div>
+    <button id="showCoverage" class="btn">Sensibiliser les clients</button>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="map.js"></script>
+</body>
+</html>
